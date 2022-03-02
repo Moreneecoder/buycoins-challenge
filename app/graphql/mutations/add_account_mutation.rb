@@ -39,7 +39,7 @@ module Mutations
             p user = User.find(user)
             account = user.build_account(user_account_name: user_account_name, user_account_number: user_account_number, bank_code: bank_code)
 
-            { error: account.errors.full_messages } unless account.save!
+            { errors: account.errors.full_messages } unless account.save!
             { user: user } if user.update!(is_verified: true)              
           end                          
         end
