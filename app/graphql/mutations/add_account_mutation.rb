@@ -41,7 +41,9 @@ module Mutations
 
             { errors: account.errors.full_messages } unless account.save!
             { user: user } if user.update!(is_verified: true)              
-          end                          
+          end
+        else
+          { errors: "Could not resolve account name. Check parameters or try again."}                     
         end
 
       else
