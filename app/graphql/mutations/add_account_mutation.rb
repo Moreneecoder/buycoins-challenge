@@ -5,7 +5,8 @@
 module Mutations
   class AddAccountMutation < BaseMutation
     # TODO: define return fields
-    field :user, [Types::UserType]    
+    field :account, Types::AccountType
+    field :user, Types::UserType
     field :errors, String
 
     # TODO: define arguments
@@ -28,56 +29,27 @@ module Mutations
     # TODO: define resolve method
     def resolve(user_account_name:, user_account_number:, bank_code:, user:)
 
-      account_object = verify_account(user_account_number, bank_code)   
+      account_object = verify_account(user_account_number, bank_code) 
       
       if account_object[:status]
         name_from_paystack = account_object[:data][:account_name]
 
-        check_ld_distance(name_from_paystack, user_account_number)
-        # {
-        #   user: account_object,
-        #   errors: nil
-        # }
+        if check_ld_distance(name_from_paystack, user_account_name)
+          ActiveRecord::Base.transaction do   
+            p user = User.find(user)
+            account = user.build_account(user_account_name: user_account_name, user_account_number: user_account_number, bank_code: bank_code)
+
+            { error: account.errors.full_messages } unless account.save!
+            { user: user } if user.update!(is_verified: true)              
+          end                          
+        end
+
       else
         {
           user: nil,
           errors: account_object[:message]
         }
       end
-
-      # if account_object[:status] 
-      #   name_from_paystack = account_object[:data][:account_name]
-
-      #   if Levenshtein.distance(name_from_paystack, user_account_name) <= 2
-      #     status = true
-      #  else
-      #     status = user_account_name == name_from_paystack
-      #  end
-      # else
-      #   {
-      #     error: account_object[:status]
-      #   }
-      # end
-
-      # if status
-
-      # user = User.find(user)
-      # account = user.build_account(user_account_name: user_account_name, user_account_number: user_account_number, bank_code: bank_code)
-
-      # if account.save
-      #   {
-      #     account: account
-      #   }
-      # else
-      #   {
-      #     account: nil,
-      #     error: account.errors.full_messages
-      #   }
-      # end
-
-      # else
-
-      # end
 
     end
   end

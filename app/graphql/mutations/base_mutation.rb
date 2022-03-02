@@ -1,3 +1,5 @@
+require 'levenshtein'
+
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
     argument_class Types::BaseArgument
@@ -15,7 +17,17 @@ module Mutations
       )
 
       resp = conn.get("bank/resolve?account_number=#{account_number}&bank_code=#{bank_code}")
-      JSON.parse(resp.body, symbolize_names: true)      
+      p JSON.parse(resp.body, symbolize_names: true)      
+    end
+
+    def check_ld_distance(name1, name2)
+      p name1
+      p name2
+      if Levenshtein.distance(name1.downcase, name2.downcase) <= 2
+       p status = true
+      else
+       p status = name1 == name2
+       end
     end
   end
 end
