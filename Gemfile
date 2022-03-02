@@ -44,3 +44,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "graphql", "~> 2.0"
 
 gem "graphiql-rails", "~> 1.8"
+gem 'faraday', '~> 1.8.0'
+gem 'levenshtein', '~> 0.2.2'
+
