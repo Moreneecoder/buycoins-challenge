@@ -21,13 +21,8 @@ module Mutations
     end
 
     def check_ld_distance(name1, name2)
-      p name1
-      p name2
-      if Levenshtein.distance(name1.downcase, name2.downcase) <= 2
-       p status = true
-      else
-       p status = name1 == name2
-       end
+      return true if Levenshtein.distance(name1.downcase, name2.downcase) <= 2           
+      name1 == name2
     end
   end
 end
