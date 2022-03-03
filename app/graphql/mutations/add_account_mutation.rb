@@ -29,12 +29,12 @@ module Mutations
     # TODO: define resolve method
     def resolve(user_account_name:, user_account_number:, bank_code:, user:)
 
-      account_object = verify_account(user_account_number, bank_code) 
+      account_object = Verify.bank_account(user_account_number, bank_code) 
       
       if account_object[:status]
         name_from_paystack = account_object[:data][:account_name]
 
-        if check_ld_distance(name_from_paystack, user_account_name)
+        if Verify.lev_distance(name_from_paystack, user_account_name)
           ActiveRecord::Base.transaction do   
             p user = User.find(user)
             account = user.build_account(user_account_name: user_account_name, user_account_number: user_account_number, bank_code: bank_code)
