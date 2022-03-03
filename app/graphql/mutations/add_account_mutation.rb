@@ -29,30 +29,26 @@ module Mutations
     # TODO: define resolve method
     def resolve(user_account_name:, user_account_number:, bank_code:, user:)
 
-      account_object = Verify.bank_account(user_account_number, bank_code) 
-      
-      if account_object[:status]
-        name_from_paystack = account_object[:data][:account_name]
+      account_object = Verify.bank_account(user_account_number, bank_code)
+      raise(GraphQL::ExecutionError, account_object[:message]) unless account_object[:status]
+            
+      name_from_paystack = account_object[:data][:account_name]
 
-        if Verify.lev_distance(name_from_paystack, user_account_name)
-          ActiveRecord::Base.transaction do   
-            p user = User.find(user)
-            account = user.build_account(user_account_name: user_account_name, user_account_number: user_account_number, bank_code: bank_code)
+      lev_distance = Verify.lev_distance(name_from_paystack, user_account_name)
+      raise(GraphQL::ExecutionError, "Could not resolve account name. Check parameters or try again.") unless lev_distance
 
-            { errors: account.errors.full_messages } unless account.save!
-            { user: user } if user.update!(is_verified: true)              
-          end
-        else
-          { errors: "Could not resolve account name. Check parameters or try again."}                     
-        end
+      ActiveRecord::Base.transaction do   
+        user = User.find(user)
+        account = user.build_account(
+          user_account_name: user_account_name,
+          user_account_number: user_account_number, 
+          bank_code: bank_code
+        )
 
-      else
-        {
-          user: nil,
-          errors: account_object[:message]
-        }
-      end
-
+        raise(GraphQL::ExecutionError, account.errors.full_messages) unless account.save
+        
+        { user: user } if user.update!(is_verified: true)              
+      end     
     end
   end
 end

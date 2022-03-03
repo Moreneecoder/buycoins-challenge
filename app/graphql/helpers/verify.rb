@@ -7,7 +7,7 @@ module Verify
         )
   
         resp = conn.get("bank/resolve?account_number=#{account_number}&bank_code=#{bank_code}")
-        p JSON.parse(resp.body, symbolize_names: true)      
+        JSON.parse(resp.body, symbolize_names: true)      
     end
 
     def Verify.lev_distance(name1, name2)
