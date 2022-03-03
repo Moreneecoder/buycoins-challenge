@@ -5,9 +5,8 @@
 module Mutations
   class AddAccountMutation < BaseMutation
     # TODO: define return fields
-    field :account, Types::AccountType
-    field :user, Types::UserType
-    field :errors, String
+    # field :account, Types::AccountType
+    field :user, Types::UserType    
 
     # TODO: define arguments
     argument :user_account_name, String, required: true do
