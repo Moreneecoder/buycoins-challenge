@@ -9,9 +9,9 @@ RSpec.describe Mutations::AddAccountMutation, type: :graphql do
                   mutation {
                     addAccountMutation(input: {
                       user: #{user.id},
-                      userAccountName: "Bello Morenikeij Fuad"
-                      userAccountNumber: "2132540160"
-                      bankCode: "033"
+                      userAccountName: "NobleHeart Foundation"
+                      userAccountNumber: "0090634999"
+                      bankCode: "044"
                     }){
                       user {
                         id,
