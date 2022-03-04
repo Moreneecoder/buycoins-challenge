@@ -61,7 +61,7 @@ PAYSTACK_SECRET=<YOUR_PAYSTACK_SECRET_KEY>
 
 - GitHub: [@moreenecoder](https://github.com/Moreneecoder)
 - Twitter: [@mo_bello19](https://twitter.com/mo_bello19)
-- LinkedIn: [Morenikeji Bello](https://linkedin.com/morenikeji-bello)
+- LinkedIn: [Morenikeji Bello](https://linkedin.com/in/morenikeji-bello)
 
 ## Acknowledgments
 
