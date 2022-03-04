@@ -58,4 +58,11 @@ RSpec.describe Account, type: :model do
         end
     end
   end
+
+  describe 'Associations' do
+      it 'belongs to one user' do
+          account = Account.reflect_on_association(:user)
+          expect(account.macro).to eq(:belongs_to)
+      end
+  end
 end
