@@ -3,11 +3,11 @@
 > A solution to the Buycoins backend engineering challenge
 
 ## About This Project
-The project is a GraphQL API that collects user's banking details and fetches their bank account name from through the Paystack API. The program also calculates the levenshtein distance between user supplied names and the Paystack supplied name, so it can still verify user's in cases of simple misspellings.
+The project is a GraphQL API that collects users' banking details and fetch their bank account name from the Paystack API. The program also calculates the levenshtein distance between a user-supplied name and the Paystack-supplied name, so it can still verify user's in cases of simple misspellings.
 
 ## Use Case For Pure Levenshtein Distance (LD) Over Damerau–Levenshtein Distance (Damerau-LD) In This Scenario
 
-Since we need to keep our edit distance to within 2, targeted at instances where not more than two letters are misplaced, the Pure LD handles this better. If there are `4` misplaced letters, the Pure LD returns an edit distance of `4`, which fails our use case as expected. However, the Damerau-LD will return `2` and verify a user, which betrays our use case. For instance, If a user inputs `Pyastcak` instead of `Paystack`, the Damerau-LD will return `2` and verify the user (which we do not want), while the Pure LD returns `4` and declines verification (as expected).
+Since we need to keep our edit distance to within `2`, targeted at instances where not more than two letters are misplaced, the Pure LD handles this better. If there are `4` misplaced letters, the Pure LD returns an edit distance of `4`, which fails our use case as expected. However, the Damerau-LD will return `2` and verify a user, which betrays our use case. For instance, If a user inputs `Pyastcak` instead of `Paystack`, the Damerau-LD will return `2` and verify the user (which we do not want), while the Pure LD returns `4` and declines verification (as expected).
 
 ## Built With
 
