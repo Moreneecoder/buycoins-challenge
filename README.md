@@ -6,7 +6,7 @@
 The project is a GraphQL API that collects users' banking details and fetch their bank account name from the Paystack API. The program also calculates the levenshtein distance between a user-supplied name and the Paystack-supplied name, so it can still verify user's in cases of simple misspellings.
 
 ## Major Assumptions On Inplementation
-* While building, I assumed there is already an existing user who is trying to add the bank account, hence I created a user in the DB with a `name` and `is_verified` attribute.
+* While building, I assumed there is already an existing user who is trying to add the bank account (as stated in the Challenge documentation), hence I created a users table in the DB with a `name` and `is_verified` attribute.
 
 ## Use Case For Pure Levenshtein Distance (LD) Over Damerau–Levenshtein Distance (Damerau-LD) In This Scenario
 
